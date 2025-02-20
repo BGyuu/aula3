@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Interativa</title>
+    <link rel="stylesheet" href="formulario.css">
+</head>
+<body>
+    <h1>Lista de Itens</h1>
+    <input type="text" id="itemInput" placeholder="Digite um item">
+    <button id="addItem">Adicionar</button>
+    <ul id="itemList"></ul>
+    <p>Total de itens: <span id="counter">0</span></p>
+    <button id="clear-btn">Limpar Lista</button>
+
+    <script>
+        const itemInput = document.getElementById("itemInput");
+        const addItemButton = document.getElementById("addItem");
+        const itemList = document.getElementById("itemList");
+        const counter = document.getElementById("counter");
+        const clearButton = document.getElementById("clear-btn");
+
+        function updateCounter() {
+            counter.textContent = itemList.children.length;
+        }
+
+        function addItem() {
+            const itemText = itemInput.value.trim();
+            if (itemText === "") return;
+
+            const li = document.createElement("li");
+            li.innerHTML = `${itemText} <button class='remove-btn'>Remover</button>`;
+
+            li.querySelector(".remove-btn").addEventListener("click", function () {
+                li.remove();
+                updateCounter();
+            });
+
+            itemList.appendChild(li);
+            itemInput.value = "";
+            updateCounter();
+        }
+
+        function clearList() {
+            itemList.innerHTML = "";
+            updateCounter();
+        }
+
+        addItemButton.addEventListener("click", addItem);
+        clearButton.addEventListener("click", clearList);
+    </script>
+</body>
+</html>
